@@ -24,7 +24,7 @@ extension Array {
 extension Array {
 
     /** split in chunks with given chunk size */
-    func chunks(size chunksize: Int) -> Array<Array<Element>> {
+    public func chunks(size chunksize: Int) -> Array<Array<Element>> {
         var words = Array<Array<Element>>()
         words.reserveCapacity(self.count / chunksize)
         for idx in stride(from: chunksize, through: self.count, by: chunksize) {
@@ -38,7 +38,7 @@ extension Array {
     }
 }
 
-extension Array where Element: Integer, Element.IntegerLiteralType == UInt8 {
+extension Array where Element == UInt8 {
     
     public init(hex: String) {
         self.init(reserveCapacity: hex.unicodeScalars.lazy.underestimatedCount)
@@ -67,14 +67,14 @@ extension Array where Element: Integer, Element.IntegerLiteralType == UInt8 {
                 return
             }
             if let b = buffer {
-                self.append(b << 4 | v as! Element)
+                self.append(b << 4 | v)
                 buffer = nil
             } else {
                 buffer = v
             }
         }
-        if let b = buffer{
-            self.append(b as! Element)
+        if let b = buffer {
+            self.append(b)
         }
     }
     
